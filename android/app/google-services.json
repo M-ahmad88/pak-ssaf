@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "639679265845",
+    "firebase_url": "https://saaf-f0e2b-default-rtdb.firebaseio.com",
+    "project_id": "saaf-f0e2b",
+    "storage_bucket": "saaf-f0e2b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639679265845:android:3f561eca33c17eaace857c",
+        "android_client_info": {
+          "package_name": "com.ahmad.paksaaf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639679265845-k8oppopfc99lbet8ktpm5l3sjcvsmdr2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ2detPWPlbHMOFGaULfmrtAloL25Fi7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639679265845-k8oppopfc99lbet8ktpm5l3sjcvsmdr2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
