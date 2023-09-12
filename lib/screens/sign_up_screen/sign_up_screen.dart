@@ -1,9 +1,14 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_size/flutter_keyboard_size.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
+import 'package:pak_saaf/utils/global.dart';
 
 import '../../common/custom_animation.dart';
 import '../../common/custom_button.dart';
@@ -17,6 +22,7 @@ import '../../utils/color_constants.dart';
 import '../../utils/size_utils.dart';
 import '../../utils/view_constants.dart';
 import '../login_screen/login_screen.dart';
+import '../main_bottom_nav/main_home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -31,13 +37,88 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   bool value = false;
+  String? name;
+  String? email;
   String? password;
   String? confirmPassword;
-  String? countryCode;
+  String? userName;
   bool isLoading = false;
   bool isTermsAndConditionChecked = false;
 
   bool isButtonEnabled = false;
+
+  validateForm(){
+    String emailCheck = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+    RegExp regExp = new RegExp(emailCheck);
+
+    if (name!.length <= 3 ){
+      Fluttertoast.showToast(msg: "name must be more than 3 characters ");
+    }
+    else if(!regExp.hasMatch(email!)){
+      Fluttertoast.showToast(msg: "Please enter a valid email");
+
+    }
+
+    else if (password!.length <= 8 ){
+      Fluttertoast.showToast(msg: "Password must be more than 8 characters ");
+    }
+
+    else if (password! != confirmPassword!){
+      Fluttertoast.showToast(msg: "Passwords do not match");
+    }
+    else if (name!.isEmpty || email!.isEmpty || userName!.isEmpty || password!.isEmpty || confirmPassword!.isEmpty){
+      Fluttertoast.showToast(msg: "Required fields can not be empty");
+    }
+
+    else{
+      setState(() {
+        isLoading  = true;
+      });
+
+      saveUserInfo();
+
+    }
+
+
+  }
+
+  saveUserInfo() async{
+    final User? firebaseUser = (
+        await fAuth.createUserWithEmailAndPassword(
+            email: email!.trim(), password: password!.trim()
+        ).catchError((msg){
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(msg: "Error: "+ msg.toString());
+        })
+    ).user;
+
+    if (firebaseUser != null){
+      Map userMap = {
+        "id": firebaseUser.uid,
+        "name": name,
+        "userName": userName,
+        "email": email
+
+      };
+      DatabaseReference userRef = FirebaseDatabase.instance.ref().child("users");
+      userRef.child(firebaseUser.uid).set(userMap);
+      currentFirebaseUser = firebaseUser;
+      Fluttertoast.showToast(msg: "account created");
+      Navigator.of(context).push(bottomToTop(MainHomeScreen()));
+    }
+    else{
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "account is not created");
+    }
+
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +150,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           : Padding(
         padding: MediaQuery.of(context).viewInsets,
             child:
-            ViewConstants.bottomSheetButtonWidget(txtButton:  Strings.sign_up,variant: ButtonVariant.FillprimaryColor, onButtonPressed: () async {
+            ViewConstants.bottomSheetButtonWidget(txtButton:  Strings.sign_up,variant: ButtonVariant.FillprimaryColor, onButtonPressed: ()  {
 
+              validateForm();
             }
 
                 )
@@ -90,8 +172,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 label: Strings.full_name,
                 hint: Strings.full_name,
                 onTextChange: (text) {
-
-
+                  name = text;
                 },
               ),
 
@@ -101,6 +182,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 label: Strings.email,
                 hint: Strings.enter_email,
                 onTextChange: (text) {
+                  email = text;
 
                 },
               ),
@@ -110,7 +192,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 label: Strings.username,
                 hint: Strings.enter_username,
                 onTextChange: (text) {
-
+                  userName = text;
                 },
               ),
               TextViews.textContainer(text: Strings.username_requirement, textSize: 12, edgeInsets: EdgeInsets.fromLTRB(5, 1, 0, 0)),
