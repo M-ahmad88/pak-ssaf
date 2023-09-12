@@ -1,7 +1,9 @@
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pak_saaf/screens/main_bottom_nav/main_home_screen.dart';
 import '../../common/button_widget.dart';
 import '../../common/checkbox_widget.dart';
@@ -10,17 +12,19 @@ import '../../common/input_text_field_widget.dart';
 import '../../common/password_field_widget.dart';
 import '../../common/scaffold_app_bar.dart';
 import '../../forgot_password_screen.dart';
+import '../../utils/global.dart';
+import '../../utils/progress_dialog.dart';
 import '../../utils/view_constants.dart';
 import '../sign_up_screen/sign_up_screen.dart';
-
 import '../../../string_en.dart';
 import '../../../themes/text_styles.dart';
 import '../../../utils/color_constants.dart';
-import '../../../utils/icon_constants.dart';
+import '../splash_screen/splash_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
   bool shouldRemember = false;
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -31,6 +35,70 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
 
   bool isButtonEnabled = false;
+  validateForm()
+  {
+    if(!widget.emailController.text.contains("@"))
+    {
+      Fluttertoast.showToast(msg: "Email address is not Valid.");
+    }
+    else if(widget.passwordController.text.isEmpty)
+    {
+      Fluttertoast.showToast(msg: "Password is required.");
+    }
+    else
+    {
+      loginDriverNow();
+    }
+  }
+
+  loginDriverNow() async
+  {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext c)
+        {
+          return ProgressDialog(message: "Processing, Please wait...",);
+        }
+    );
+
+    final User? firebaseUser = (
+        await fAuth.signInWithEmailAndPassword(
+          email: widget.emailController.text.trim(),
+          password: widget.passwordController.text.trim(),
+        ).catchError((msg){
+          Navigator.pop(context);
+          Fluttertoast.showToast(msg: "Error: " + msg.toString());
+        })
+    ).user;
+
+    if(firebaseUser != null)
+    {
+      DatabaseReference userRef = FirebaseDatabase.instance.ref().child("users");
+      userRef.child(firebaseUser.uid).once().then((userMap)
+      {
+        final snap = userMap.snapshot;
+        if(snap.value != null)
+        {
+          currentFirebaseUser = firebaseUser;
+          Fluttertoast.showToast(msg: "Login Successful.");
+          Navigator.of(context).push(bottomToTop(MainHomeScreen()));
+        }
+        else
+        {
+          Fluttertoast.showToast(msg: "No record exist with this email.");
+          fAuth.signOut();
+          Navigator.push(context, MaterialPageRoute(builder: (c)=> const SplashScreen()));
+        }
+      });
+    }
+    else
+    {
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: "Error Occurred during Login.");
+    }
+  }
+
 
 
   @override
@@ -106,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 edgeInsets: EdgeInsets.fromLTRB(
                     0, heightScaled(context: context, pixels: 32), 0, 0),
                 voidCallback: () {
-                  Navigator.of(context).push(bottomToTop(MainHomeScreen()));
+                  validateForm();
 
 
                 },
@@ -153,5 +221,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
 }
