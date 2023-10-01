@@ -93,6 +93,7 @@ class Strings {
   static String premission_required="premission_required";
 
   static var scan_me= "Scan QR";
+  static var redeem = "Redeem";
 
   static var welcome_home="Welcome Home";
 

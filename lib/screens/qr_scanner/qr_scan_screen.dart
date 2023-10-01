@@ -3,13 +3,15 @@ import 'package:pak_saaf/common/scaffold_app_bar.dart';
 import 'package:pak_saaf/string_en.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
+import '../../utils/global.dart';
+
 class QRScanScreen extends StatefulWidget {
   @override
   State<QRScanScreen> createState() => _QRScanScreenState();
 }
 
 class _QRScanScreenState extends State<QRScanScreen> {
-  Barcode? result;
+
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 

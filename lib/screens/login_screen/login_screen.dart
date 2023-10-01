@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pak_saaf/common/AssistantMethods.dart';
 import 'package:pak_saaf/screens/main_bottom_nav/main_home_screen.dart';
 import '../../common/button_widget.dart';
 import '../../common/checkbox_widget.dart';
@@ -155,6 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       }),
                   ButtonWidgets.textButton(
                       text: Strings.forgot_password,
+
                       voidCallback: () {
                         Navigator.push(
                             context,
@@ -197,11 +199,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           TextSpan(
                             text: Strings.dont_have_account,
                             style: TextViews
-                                .txtLatoRegular12textSecondaryColor1,
+                                .txtLatoRegular14Secondary,
                           ),
                           TextSpan(
                               text: Strings.sign_up,
-                              style: TextViews.txtLato12Primary,
+                              style: TextViews.txtLatoBold12Primary.copyWith(fontSize: 16),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   Navigator.pushReplacement(

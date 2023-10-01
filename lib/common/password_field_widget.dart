@@ -77,6 +77,7 @@ class _PasswordFieldWidgetState extends State<PasswordFieldWidget> {
                       _isHidden
                           ? Icons.visibility_off_outlined
                           : Icons.visibility_outlined,
+                      color: Colors.black,
                     ),
                     onPressed: () {
                       _togglePasswordView();
