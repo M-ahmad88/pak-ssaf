@@ -15,6 +15,27 @@ abstract class ButtonWidgets {
         child: OutlinedButton(
           onPressed: voidCallback,
           style: OutlinedButton.styleFrom(
+            minimumSize: const Size.fromHeight(100),
+            backgroundColor: color,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(radius)),
+          ),
+          child: Text(
+            text,
+            style: const TextStyle(color: ThemeColor.textWhiteColor,fontWeight: FontWeight.w800),
+          ),
+        ));
+  }
+  static Widget outlinedSignUpButton(
+      {double radius = 12,
+        required String text,
+        required EdgeInsets edgeInsets,
+        required VoidCallback voidCallback,  bool enabled = false,  Color color = ThemeColor.primaryColor, }) {
+    return Padding(
+        padding: edgeInsets,
+        child: OutlinedButton(
+          onPressed: voidCallback,
+          style: OutlinedButton.styleFrom(
             minimumSize: const Size.fromHeight(45),
             backgroundColor: color,
             shape: RoundedRectangleBorder(

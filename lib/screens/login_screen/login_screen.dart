@@ -170,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
 
-              ButtonWidgets.outlinedButton(
+              ButtonWidgets.outlinedSignUpButton(
 
                 text: Strings.sign_in,
                 edgeInsets: EdgeInsets.fromLTRB(

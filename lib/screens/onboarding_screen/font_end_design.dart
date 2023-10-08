@@ -69,7 +69,7 @@ class FrontEndDesign extends StatelessWidget {
                     }),
               ),
               Expanded(
-                child: ButtonWidgets.outlinedButton(
+                child: ButtonWidgets.outlinedSignUpButton(
                     radius: 8,
                     text: Strings.sign_in,
                     edgeInsets: const EdgeInsets.only(left: 4),
