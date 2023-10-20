@@ -77,12 +77,14 @@ class _LoginScreenState extends State<LoginScreen> {
     {
       DatabaseReference userRef = FirebaseDatabase.instance.ref().child("users");
       userRef.child(firebaseUser.uid).once().then((userMap)
-      {
+      async {
         final snap = userMap.snapshot;
         if(snap.value != null)
         {
           currentFirebaseUser = firebaseUser;
           Fluttertoast.showToast(msg: "Login Successful.");
+          await AssistantMethod.getNameOfUser();
+          await AssistantMethod.getPointsOfUser();
           Navigator.of(context).push(bottomToTop(MainHomeScreen()));
         }
         else

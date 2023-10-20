@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pak_saaf/common/AssistantMethods.dart';
 import 'package:pak_saaf/common/button_widget.dart';
 import 'package:pak_saaf/common/scaffold_app_bar.dart';
 import 'package:pak_saaf/utils/color_constants.dart';
@@ -27,10 +26,8 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    /*var points = userModelCurrentInfo!.points;*/
-    var userName = userModelCurrentInfo?.name ?? "User";
     return Scaffold(
-      appBar: scaffoldAppBar(context, Strings.welcome_home),
+      appBar: scaffoldAppBar(context, "Welcome $userName"),
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       body: Column(
@@ -52,7 +49,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                   ),
                   child: Center(
                     child: Text(
-                      result != null ? result!.code.toString() : "12 pts",
+                      "$points pts",
                       style: const TextStyle(
                         fontSize: 60,
                         color: Colors.black,
@@ -69,40 +66,14 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
           Expanded(
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: ButtonWidgets.outlinedButton(
-                        radius: 8,
-                        text: Strings.scan_me,
-                        edgeInsets: const EdgeInsets.all(12),
-                        voidCallback: () {
-                          Navigator.of(context).push(bottomToTop(QRScanScreen()));
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: ButtonWidgets.outlinedButton(
-                        radius: 8,
-                        text: Strings.redeem,
-                        edgeInsets: const EdgeInsets.all(12),
-                        voidCallback: () {
-                          Navigator.of(context).push(bottomToTop(QRScanScreen()));
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-
 
                 Row(
                   children: [
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          const url = 'https://www.britannica.com/science/recycling/Ferrous-metals';
+                          const url =
+                              'https://www.britannica.com/science/recycling/Ferrous-metals';
                           launch(url); // Open the URL when the card is tapped
                         },
                         child: Card(
@@ -116,16 +87,18 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
-                                colors: [ThemeColor.secondaryColor, ThemeColor.primaryColor], // Customize gradient colors
+                                colors: [
+                                  ThemeColor.secondaryColor,
+                                  ThemeColor.primaryColor
+                                ], // Customize gradient colors
                               ),
                             ),
                             child: Column(
-                              children:  [
+                              children: [
                                 Padding(
-                                  padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
-                                  child:
-
-                                  Text(
+                                  padding: EdgeInsets.only(
+                                      left: 16.0, right: 16.0, top: 16.0),
+                                  child: Text(
                                     "Hey Valued Customer",
                                     style: TextStyle(
                                       fontSize: 20,
@@ -135,7 +108,11 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(left: 16.0,right: 16.0, bottom: 16.0, top: 0.0),
+                                  padding: EdgeInsets.only(
+                                      left: 16.0,
+                                      right: 16.0,
+                                      bottom: 16.0,
+                                      top: 0.0),
                                   child: Text(
                                     "We're delighted that you're contributing to recycling efforts. Thank you!\nTo learn more about recycling waste click here! ",
                                     style: TextStyle(
@@ -152,7 +129,6 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                     ),
                   ],
                 ),
-
                 const Text(
                   "OFFERS", // Text above the cards
                   style: TextStyle(
@@ -176,9 +152,24 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                 ),
                 const Card(
                   child: ListTile(
-                    leading: Icon(Icons.car_crash_outlined), // Icon at the left corner
+                    leading: Icon(Icons.car_crash_outlined),
+                    // Icon at the left corner
                     title: Text("Get 50% off Your Next Yango Ride"),
                     subtitle: Text("180 pts required"),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        Navigator.of(context)
+                            .push(bottomToTop(QRScanScreen()));
+                      },
+                      child: Icon(Icons.qr_code), // Replace with the icon you want
+                      backgroundColor: ThemeColor.secondaryColor, // Set the background color
+                    ),
                   ),
                 ),
               ],
@@ -186,8 +177,6 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
           ),
         ],
       ),
-    )
-
-    ;
+    );
   }
 }

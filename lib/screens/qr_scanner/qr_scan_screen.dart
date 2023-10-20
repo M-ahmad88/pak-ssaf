@@ -1,9 +1,12 @@
+
 import 'package:flutter/material.dart';
 import 'package:pak_saaf/common/scaffold_app_bar.dart';
 import 'package:pak_saaf/string_en.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
+import '../../common/custom_animation.dart';
 import '../../utils/global.dart';
+import '../main_bottom_nav/main_home_screen.dart';
 
 class QRScanScreen extends StatefulWidget {
   @override
@@ -22,10 +25,17 @@ class _QRScanScreenState extends State<QRScanScreen> {
   }
 
   void _onQRViewCreated(QRViewController controller) {
+    result = null;
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        if (result!.code!.isNotEmpty){
+          points += int.parse(result!.code!);
+          Navigator.of(context).pushReplacement(bottomToTop(MainHomeScreen()));
+          dispose();
+
+        }
       });
     });
   }
@@ -63,3 +73,6 @@ class _QRScanScreenState extends State<QRScanScreen> {
     );
   }
 }
+
+
+
