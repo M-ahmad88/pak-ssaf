@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class ThemeColor{
 
-  static const secondaryColor = Color(0xff51b09f);
+  static const secondaryColor = Color(0xff3BCE99);
   static const bottomSheetColor = Color(0xff1E1E1E);
-  static const primaryColor = Color(0xffFF8f85);
+  static const primaryColor = Color(0xffFFFFFF);
   static const accentColor = Color(0xff31261B);
   static const fadeprimaryColor = Color(0xffF7F7F7);
   static const whiteSecondaryColor = Color(0xffF4F4F4);

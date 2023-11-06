@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pak_saaf/common/AssistantMethods.dart';
+import 'package:pak_saaf/common/toast_message.dart';
 import 'package:pak_saaf/screens/main_bottom_nav/main_home_screen.dart';
 import '../../common/button_widget.dart';
 import '../../common/checkbox_widget.dart';
@@ -26,32 +27,276 @@ class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
   bool shouldRemember = false;
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
+  var phoneNumber;
+  var password;
   bool isButtonEnabled = false;
+  
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Sign In Screen"),
+        foregroundColor:ThemeColor.black900 ,
+        backgroundColor:    ThemeColor.secondaryColor,
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [ThemeColor.secondaryColor, ThemeColor.primaryColor],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Sign In',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xFF33363F),
+                  fontSize: 30,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w500,
+                  height: 0,
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return SignUpScreen();
+                  }));
+                },
+                child: Text(
+                  "Don't have an account? Sign In here.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xFF33363F),
+                    fontSize: 18,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
+                    height: 0.06,
+                    letterSpacing: 0.30,
+                  ),
+                ),
+              ),
+
+
+              const SizedBox(height: 100,),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.grey, // shadow color
+                              blurRadius: 10, // blur radius
+                              offset: Offset(0, 3), // shadow offset
+                            ),
+                          ],
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 30),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+
+                                  'Enter Mobile No',
+                                  textAlign: TextAlign.start,
+                                  style:  TextStyle(
+                                    color: Color(0xFF615F5F),
+                                    fontSize: 18,
+                                    fontFamily: 'Nunito',
+                                    fontWeight: FontWeight.w500,
+                                    height: 0.06,
+                                    letterSpacing: 0.30,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Opacity(
+                              opacity: 0.8,
+                              child: Container(
+                                height: 47,
+                                decoration: ShapeDecoration(
+                                  color: const Color(0xFFD9D9D9),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextField(
+
+                                    decoration: const InputDecoration(border: InputBorder.none , enabledBorder: InputBorder.none),
+                                    keyboardType: TextInputType.phone,
+                                    onChanged: (value) {
+
+                                      setState(() {
+                                        phoneNumber = value;
+                                      });
+
+
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            Padding(
+                              padding: EdgeInsets.only(left: 10, right: 10, top: 40, bottom: 30),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "Enter Password",
+                                  textAlign: TextAlign.start,
+                                  style:  TextStyle(
+                                    color: Color(0xFF615F5F),
+                                    fontSize: 18,
+                                    fontFamily: 'Nunito',
+                                    fontWeight: FontWeight.w500,
+                                    height: 0.06,
+                                    letterSpacing: 0.30,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+
+                            Opacity(
+                              opacity: 0.8,
+                              child: Container(
+                                height: 47,
+                                decoration: ShapeDecoration(
+                                  color: const Color(0xFFD9D9D9),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextField(
+                                    obscureText: true,
+                                    decoration: const InputDecoration(border: InputBorder.none , enabledBorder: InputBorder.none),
+                                    onChanged: (value) {
+
+                                      setState(() {
+                                        password = value;
+                                       });
+
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ) ,
+
+                            const SizedBox(height: 20),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: ThemeColor.secondaryColor,
+                                      minimumSize: const Size(double.infinity, 45),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+
+                                    onPressed: () {
+                                      validateForm();
+                                      },
+                                    child:  Text( "Sign In"),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20,)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+
+
+            ],
+          ),
+        ),
+      ),
+    );
+
+
+
+    /*
+              TextField(
+                decoration: InputDecoration(labelText: 'Phone Number'),
+                onChanged: (value) {
+                  setState(() {
+                    phoneNumber = value;
+                  });
+                },
+              ),
+              TextField(
+                decoration: InputDecoration(labelText: 'OTP'),
+                onChanged: (value) {
+                  setState(() {
+                    otp = value;
+                  });
+                },
+              ),
+              isLoading
+                  ? CircularProgressIndicator()
+                  : ElevatedButton(
+                onPressed: sendOTP,
+                child: Text("Send OTP"),
+              ),
+              isLoading
+                  ? CircularProgressIndicator()
+                  : ElevatedButton(
+                onPressed: verifyOTP,
+                child: Text("Verify OTP"),
+              ),*/
+
+
+  }
   validateForm()
   {
-    if(!widget.emailController.text.contains("@"))
-    {
-      Fluttertoast.showToast(msg: "Email address is not Valid.");
-    }
-    else if(widget.passwordController.text.isEmpty)
+    if(password == null || password.isEmpty)
     {
       Fluttertoast.showToast(msg: "Password is required.");
     }
     else
     {
+
       loginDriverNow();
     }
-  }
 
+  }
   loginDriverNow() async
   {
     showDialog(
@@ -65,8 +310,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final User? firebaseUser = (
         await fAuth.signInWithEmailAndPassword(
-          email: widget.emailController.text.trim(),
-          password: widget.passwordController.text.trim(),
+          email: "$phoneNumber@gmail.com",
+          password: password,
         ).catchError((msg){
           Navigator.pop(context);
           Fluttertoast.showToast(msg: "Error: " + msg.toString());
@@ -83,7 +328,7 @@ class _LoginScreenState extends State<LoginScreen> {
         {
           currentFirebaseUser = firebaseUser;
           Fluttertoast.showToast(msg: "Login Successful.");
-          await AssistantMethod.getNameOfUser();
+
           await AssistantMethod.getPointsOfUser();
           Navigator.of(context).push(bottomToTop(MainHomeScreen()));
         }
@@ -102,15 +347,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+/* Widget build(BuildContext context) {
     final height = MediaQuery
         .of(context)
         .size
@@ -224,5 +461,8 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
+  }*/
 }
+
+
+

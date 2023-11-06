@@ -30,152 +30,115 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
       appBar: scaffoldAppBar(context, "Welcome $userName"),
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Stack(
-            fit: StackFit.loose,
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.20,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(0),
-                      topRight: Radius.circular(0),
-                      bottomLeft: Radius.circular(40),
-                      bottomRight: Radius.circular(40),
-                    ),
-                    color: ThemeColor.secondaryColor,
-                  ),
-                  child: Center(
-                    child: Text(
-                      "$points pts",
-                      style: const TextStyle(
-                        fontSize: 60,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [ThemeColor.secondaryColor, ThemeColor.primaryColor],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: Column(
-              children: [
-
-                Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          const url =
-                              'https://www.britannica.com/science/recycling/Ferrous-metals';
-                          launch(url); // Open the URL when the card is tapped
-                        },
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          margin: EdgeInsets.all(16.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  ThemeColor.secondaryColor,
-                                  ThemeColor.primaryColor
-                                ], // Customize gradient colors
-                              ),
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 40, right: 40),
+                          child: Card(
+                            elevation: 10,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
                             ),
-                            child: Column(
+                            margin: EdgeInsets.all(16.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center, // Center align the children
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      left: 16.0, right: 16.0, top: 16.0),
+                                      left: 16.0, right: 16.0, top: 50.0, bottom: 50),
                                   child: Text(
-                                    "Hey Valued Customer",
+                                    "$points pts",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 40,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                                      color: Colors.black,
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 16.0,
-                                      right: 16.0,
-                                      bottom: 16.0,
-                                      top: 0.0),
-                                  child: Text(
-                                    "We're delighted that you're contributing to recycling efforts. Thank you!\nTo learn more about recycling waste click here! ",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                    ),
-                                  ),
+                                // Add your vector or icon here
+                                Icon(
+                                  Icons.star, // Replace with the desired icon
+                                  color: Colors.pink,
+                                  size: 50,
                                 ),
                               ],
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const Text(
-                  "OFFERS", // Text above the cards
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    ],
                   ),
-                ),
-                const Card(
-                  child: ListTile(
-                    leading: Icon(Icons.icecream), // Icon at the left corner
-                    title: Text("Get A McDonalds McFlurry"),
-                    subtitle: Text("30 pts required"),
+
+
+                  Row(
+                    children: [
+                      const Text(
+                        "OFFERS", // Text above the cards
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                    ],
                   ),
-                ),
-                const Card(
-                  child: ListTile(
-                    leading: Icon(Icons.discount), // Icon at the left corner
-                    title: Text("Get A 1000 Discount At Carrefour"),
-                    subtitle: Text("80 pts required"),
-                  ),
-                ),
-                const Card(
-                  child: ListTile(
-                    leading: Icon(Icons.car_crash_outlined),
-                    // Icon at the left corner
-                    title: Text("Get 50% off Your Next Yango Ride"),
-                    subtitle: Text("180 pts required"),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        Navigator.of(context)
-                            .push(bottomToTop(QRScanScreen()));
-                      },
-                      child: Icon(Icons.qr_code), // Replace with the icon you want
-                      backgroundColor: ThemeColor.secondaryColor, // Set the background color
+                  const Card(
+                    child: ListTile(
+                      leading: Icon(Icons.icecream), // Icon at the left corner
+                      title: Text("Get A McDonalds McFlurry"),
+                      subtitle: Text("30 pts required"),
                     ),
                   ),
-                ),
-              ],
+                  const Card(
+                    child: ListTile(
+                      leading: Icon(Icons.discount), // Icon at the left corner
+                      title: Text("Get A 1000 Discount At Carrefour"),
+                      subtitle: Text("80 pts required"),
+                    ),
+                  ),
+                  const Card(
+                    child: ListTile(
+                      leading: Icon(Icons.car_crash_outlined),
+                      // Icon at the left corner
+                      title: Text("Get 50% off Your Next Yango Ride"),
+                      subtitle: Text("180 pts required"),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .push(bottomToTop(QRScanScreen()));
+                        },
+                        child: Icon(Icons.qr_code),
+                        // Replace with the icon you want
+                        backgroundColor: ThemeColor
+                            .secondaryColor, // Set the background color
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
