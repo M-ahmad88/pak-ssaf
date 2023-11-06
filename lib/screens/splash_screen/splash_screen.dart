@@ -29,11 +29,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-   /* runCodeOnceAfterDelay();
+    runCodeOnceAfterDelay();
     Timer(Duration(seconds: ViewConstants.splashScreenDuration),
             () =>  Navigator.pushReplacement(
                 context, rightToLeft(const OnBoardingScreen(), null)));
-*/
   }
 
   void runCodeOnceAfterDelay() {
