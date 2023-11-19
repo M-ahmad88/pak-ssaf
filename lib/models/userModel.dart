@@ -11,3 +11,15 @@ class UserModel {
     name =( snap.value as dynamic)['name'];
   }
 }
+
+class QRModel {
+  int? value;
+  String? key;
+
+  QRModel({this.value});
+
+  QRModel.fromSnapshot(DataSnapshot snap){
+    value =( snap.value as dynamic)['Score'];
+    key =( snap.value as dynamic)['Key'];
+  }
+}

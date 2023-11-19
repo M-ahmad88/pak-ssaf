@@ -1,13 +1,13 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:pak_saaf/common/button_widget.dart';
-import 'package:pak_saaf/common/scaffold_app_bar.dart';
+import 'package:pak_saaf/screens/about_screen.dart';
+import 'package:pak_saaf/screens/login_screen/login_screen.dart';
 import 'package:pak_saaf/utils/color_constants.dart';
 import 'package:pak_saaf/utils/global.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../common/custom_animation.dart';
-import '../../../string_en.dart';
 import '../../utils/view_constants.dart';
 import '../qr_scanner/qr_scan_screen.dart';
+import '../redeem_now.dart';
 
 class MainHomeScreen extends StatefulWidget {
   double bottomNavPadding = 0;
@@ -28,7 +28,8 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: scaffoldAppBar(context, "Welcome $userName"),
+      appBar: scaffoldAppBarForHomeScreen(context, "Welcome $userName"),
+      drawer: buildDrawer(context),
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       body: Container(
@@ -87,6 +88,62 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                       ),
                     ],
                   ),
+                  /*Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            const url = 'https://www.britannica.com/science/recycling/Ferrous-metals';
+                            launch(url); // Open the URL when the card is tapped
+                          },
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            margin: EdgeInsets.all(16.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [ThemeColor.secondaryColor, ThemeColor.primaryColor], // Customize gradient colors
+                                ),
+                              ),
+                              child: Column(
+                                children:  [
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+                                    child:
+
+                                    Text(
+                                      "Hey Valued Customer",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 16.0,right: 16.0, bottom: 16.0, top: 0.0),
+                                    child: Text(
+                                      "We're delighted that you're contributing to recycling efforts. Thank you!\nTo learn more about recycling waste click here! ",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),*/
+                  buildHorizontalCarousel(context),
 
                   /*Row(
                     children: [
@@ -122,7 +179,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                       subtitle: Text("180 pts required"),
                     ),
                   ),*/
-                  Padding(
+                 /* Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -162,15 +219,15 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
 
                       ],
                     ),
-                  ),
+                  ),*/
 
                   Align(
                     alignment: Alignment.center,
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Container(
-                        width: 150,
-                        height: 150,
+                        width: 100,
+                        height: 100,
                         margin: ViewConstants.scaledEdgeInsets(context: context, top: 40),
                         child: FloatingActionButton(
                           onPressed: () {
@@ -196,3 +253,209 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
     );
   }
 }
+
+
+Widget buildDrawer(context) {
+  return Drawer(
+    backgroundColor: ThemeColor.textHintColor_2,
+    child: Column(
+      children: [
+        Expanded(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              Container(
+                padding: EdgeInsets.all(8.0),
+                child: DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: ThemeColor.textSecondaryColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey, // Shadow color
+                        offset: Offset(0, 2), // Offset of the shadow
+                        blurRadius: 4, // Blur radius of the shadow
+                        spreadRadius: 1, // Spread radius of the shadow
+                      ),
+                    ], // Use your desired light grey color
+                  ),
+                  child: Text(
+                    'Welcome $userName', // Display the user's name
+                    style: TextStyle(
+                      color: Colors.black, // Set the text color
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.help, color: Colors.black), // Black icon
+                title: Text(
+                  'Help',
+                  style: TextStyle(color: Colors.black),
+                ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return AboutScreen();
+                  }));
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.settings, color: Colors.black), // Black icon
+                title: Text(
+                  'Settings',
+                  style: TextStyle(color: Colors.black),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.celebration_rounded, color: Colors.black), // Black icon
+                title: Text(
+                  'Redeem Now',
+                  style: TextStyle(color: Colors.black),
+                ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return RedeemScreen();
+                  }));
+                },
+              ),
+              Divider(),
+
+            ],
+          ),
+        ),
+        // Log Out Button
+        Divider(),
+        ListTile(
+          leading: Icon(Icons.logout, color: Colors.black), // Black icon
+          title: Text(
+            'Log Out',
+            style: TextStyle(color: Colors.black),
+          ),
+          onTap: () async {
+              // Call the signOut function when the button is pressed
+            await fAuth.signOut();
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return LoginScreen();
+            }));
+
+          },
+        ),
+      ],
+    ),
+  );
+}
+
+
+
+PreferredSizeWidget scaffoldAppBarForHomeScreen(BuildContext context, String title) {
+
+
+  return AppBar(
+    title: Text(title,
+        style:
+        const TextStyle(fontSize: 18, color: ThemeColor.textWhiteColor, fontWeight: FontWeight.bold)),
+    backgroundColor: ThemeColor.secondaryColor,
+    elevation: 0,
+    leading: Builder(
+      builder: (BuildContext context) {
+        return IconButton(
+          icon: Icon(Icons.menu,
+            color: Colors.black,),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        );
+      },
+    ),
+  );
+}
+
+
+Widget buildHorizontalCarousel(context) {
+  return CarouselSlider(
+    options: CarouselOptions(
+      height: 200.0,
+      enlargeCenterPage: true,
+    ),
+    items: [
+      buildCarouselItem(
+        'https://www.britannica.com/science/recycling',
+        'Recycle',
+        'Recycling reclaims materials, minimizing waste and promoting sustainability.',
+        context
+      ),
+      buildCarouselItem(
+        'https://www.wm.com/us/en/recycle-right/recycling-101',
+        'Reduce',
+        '"Reduce" urges minimalism to curb waste and foster sustainable living.',
+          context
+      ),
+      buildCarouselItem(
+          'https://en.wikipedia.org/wiki/Reuse#:~:text=Reuse%20is%20the%20action%20or,the%20manufacture%20of%20new%20products.',
+          'Reuse',
+          '"Reuse" maximizes item lifespan, minimizing waste for sustainability.',
+          context
+      ),
+    ],
+  );
+}
+
+Widget buildCarouselItem(String url, String title, String content, context) {
+  return Card(
+    // Customize the appearance of your carousel item card
+    elevation: 10,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    margin: EdgeInsets.all(16.0),
+    child: Container(
+      width: MediaQuery.of(context).size.width - 32, // Adjust card width
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            ThemeColor.secondaryColor,
+            ThemeColor.primaryColor,
+          ],
+        ),
+      ),
+      child: Column(
+        children: [
+          // Customize the content of your carousel item
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              content,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          // Add more content as needed
+        ],
+      ),
+    ),
+  );
+}
+
+
+

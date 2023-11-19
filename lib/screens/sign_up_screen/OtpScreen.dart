@@ -5,32 +5,44 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pak_saaf/common/toast_message.dart';
 import 'package:pak_saaf/screens/login_screen/login_screen.dart';
 import 'package:pak_saaf/screens/main_bottom_nav/main_home_screen.dart';
+import '../../common/AssistantMethods.dart';
 import '../../common/custom_animation.dart';
 import '../../utils/color_constants.dart';
 import '../../utils/global.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+class OtpScreen extends StatefulWidget {
+
+
+  final String phoneNumber;
+  final String password;
+  final String UserName;
+  final String verificationId;
+
+  const OtpScreen({
+    Key? key,
+    required this.phoneNumber,
+    required this.password,
+    required this.UserName,
+    required this.verificationId
+  }) : super(key: key);
+
+
 
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  _OtpScreenState createState() => _OtpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _OtpScreenState extends State<OtpScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  late String verificationId;
-  String? phoneNumber;
   String? otp;
-  String? password;
   bool isLoading = false;
-  bool otpSent = false;
   TextEditingController textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sign Up Screen"),
+        title: const Text("Verify OTP"),
         foregroundColor:ThemeColor.black900 ,
         backgroundColor:    ThemeColor.secondaryColor,
       ),
@@ -47,8 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
                Text(
-                !otpSent ?
-                'Create new \nAccount': "Enter OTP",
+                 "Enter OTP",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xFF33363F),
@@ -58,28 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 0,
                 ),
               ),
-              const SizedBox(
-                height: 50,
-              ),
-           GestureDetector(
-             onTap: () {
-               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                 return LoginScreen();
-               }));
-             },
-             child: Text(
-                  'Already Registrered? Log in here.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF33363F),
-                    fontSize: 18,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w500,
-                    height: 0.06,
-                    letterSpacing: 0.30,
-                  ),
-                ),
-           ),
+
 
 
               const SizedBox(height: 100,),
@@ -111,8 +101,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  !otpSent ?
-                                  'Enter Mobile No' : "Enter OTP",
+                                  "Enter OTP",
                                   textAlign: TextAlign.start,
                                   style:  TextStyle(
                                     color: Color(0xFF615F5F),
@@ -140,11 +129,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     decoration: const InputDecoration(border: InputBorder.none , enabledBorder: InputBorder.none),
                                     keyboardType: TextInputType.phone,
                                     onChanged: (value) {
-                                      !otpSent ?
-                                      setState(() {
-                                        phoneNumber = value;
-                                      })
-                                          :
                                       setState(() {
                                         otp = value;
                                       });
@@ -154,51 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                             ),
-                            !otpSent ?
-                            Padding(
-                              padding: EdgeInsets.only(left: 10, right: 10, top: 40, bottom: 30),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "Enter Password",
-                                  textAlign: TextAlign.start,
-                                  style:  TextStyle(
-                                    color: Color(0xFF615F5F),
-                                    fontSize: 18,
-                                    fontFamily: 'Nunito',
-                                    fontWeight: FontWeight.w500,
-                                    height: 0.06,
-                                    letterSpacing: 0.30,
-                                  ),
-                                ),
-                              ),
-                            ):SizedBox(),
 
-                            !otpSent ?
-                            Opacity(
-                              opacity: 0.8,
-                              child: Container(
-                                height: 47,
-                                decoration: ShapeDecoration(
-                                  color: const Color(0xFFD9D9D9),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextField(
-                                    obscureText: true,
-                                    decoration: const InputDecoration(border: InputBorder.none , enabledBorder: InputBorder.none),
-                                    onChanged: (value) {
-
-                                      setState(() {
-                                        password = value;
-                                      });
-
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ) : SizedBox(),
 
                             const SizedBox(height: 20),
                             Row(
@@ -214,11 +154,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
 
                                     onPressed: () {
-                                      if (isPasswordValid(password!!)){
-                                        !otpSent ? sendOTP() : verifyOTP();
-                                      }
+
+                                        verifyOTP();
+
                                     },
-                                    child:  Text(!otpSent ? "Send OTP" : "Verify OTP"),
+                                    child:  Text("Verify OTP"),
                                   ),
                                 ),
                               ],
@@ -280,6 +220,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
 
 
+/*
   bool isPasswordValid(String password) {
     // Define your password criteria here.
     // For example, you can require a minimum length and specific character types.
@@ -294,58 +235,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
   }
+*/
 
-  Future<void> sendOTP() async {
-    textController.clear();
-    setState(() {
-      isLoading = true;
-      otpSent = true;
 
-    });
-
-    final PhoneCodeSent codeSent = (String verificationId, [int? forceResendingToken]) {
-      setState(() {
-        isLoading = false;
-        this.verificationId = verificationId;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("OTP Sent!"),
-      ));
-    };
-
-    final PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout = (String verificationId) {
-      setState(() {
-        isLoading = false;
-        this.verificationId = verificationId;
-      });
-    };
-
-    final PhoneVerificationFailed verificationFailed = (FirebaseAuthException authException) {
-      setState(() {
-        isLoading = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Verification Failed: ${authException.message}"),
-      ));
-    };
-
-    try {
-      await _auth.verifyPhoneNumber(
-        phoneNumber: phoneNumber!,
-        verificationCompleted: verificationCompleted,
-        verificationFailed: verificationFailed,
-        codeSent: codeSent,
-        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
-      );
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Error sending OTP: $e"),
-      ));
-    }
-  }
 
   Future<void> verifyOTP() async {
 
@@ -355,7 +247,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     try {
       final AuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificationId,
+        verificationId: widget.verificationId,
         smsCode: otp!,
       );
 
@@ -368,13 +260,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           isLoading = false;
         });
 
-        await signUpWithEmailAndPassword(phoneNumber!,password!);
+        await signUpWithEmailAndPassword(widget.phoneNumber,widget.password);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("OTP Verified!"),
         ));
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return MainHomeScreen();
-        }));
+
       } else {
         setState(() {
           isLoading = false;
@@ -410,7 +300,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         "number": phoneNumber,
           "email": "$phoneNumber@gmail.com",
           "points": 0,
-          "password":password
+          "password":password,
+          "name": userName
         // You can add more user information here if needed
       };
 
@@ -419,6 +310,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       currentFirebaseUser = firebaseUser;
       Fluttertoast.showToast(msg: "Account created");
+
+        await AssistantMethod.getPointsOfUser();
+        await AssistantMethod.getNameOfUser();
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return MainHomeScreen();
+        }));
       } else {
         setState(() {
           isLoading = false;

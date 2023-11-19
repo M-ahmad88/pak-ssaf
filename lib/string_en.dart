@@ -18,6 +18,11 @@ class Strings {
   static const String enter_username = "Enter username";
   static const String username_must_be_lowercase =
       "Your username must be lowercase alphanumeric.";
+
+  static const String phoneNumber = "Phone Number";
+
+  static const String numberFormat = "+92xxxxxxxxxx";
+
   static const String i_agree = "I have read and agree to the Saaf ";
   static const String terms_conditions = "Terms & Conditions ";
   static const String privacy_policy = "Privacy Policy";

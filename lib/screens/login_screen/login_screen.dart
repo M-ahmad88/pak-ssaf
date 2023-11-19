@@ -5,21 +5,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pak_saaf/common/AssistantMethods.dart';
-import 'package:pak_saaf/common/toast_message.dart';
 import 'package:pak_saaf/screens/main_bottom_nav/main_home_screen.dart';
-import '../../common/button_widget.dart';
-import '../../common/checkbox_widget.dart';
+import 'package:pak_saaf/screens/sign_up_screen/SignUpScreen.dart';
 import '../../common/custom_animation.dart';
-import '../../common/input_text_field_widget.dart';
-import '../../common/password_field_widget.dart';
-import '../../common/scaffold_app_bar.dart';
-import '../../forgot_password_screen.dart';
 import '../../utils/global.dart';
 import '../../utils/progress_dialog.dart';
-import '../../utils/view_constants.dart';
-import '../sign_up_screen/sign_up_screen.dart';
-import '../../../string_en.dart';
-import '../../../themes/text_styles.dart';
 import '../../../utils/color_constants.dart';
 import '../splash_screen/splash_screen.dart';
 
@@ -84,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   }));
                 },
                 child: Text(
-                  "Don't have an account? Sign In here.",
+                  "Don't have an account? Sign Up here.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xFF33363F),
@@ -225,9 +215,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
-
                                     onPressed: () {
-                                      validateForm();
+                                     validateForm();
                                       },
                                     child:  Text( "Sign In"),
                                   ),
@@ -292,7 +281,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     else
     {
-
       loginDriverNow();
     }
 
@@ -330,6 +318,8 @@ class _LoginScreenState extends State<LoginScreen> {
           Fluttertoast.showToast(msg: "Login Successful.");
 
           await AssistantMethod.getPointsOfUser();
+          await AssistantMethod.getNameOfUser();
+
           Navigator.of(context).push(bottomToTop(MainHomeScreen()));
         }
         else

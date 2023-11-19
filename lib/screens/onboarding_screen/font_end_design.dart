@@ -1,12 +1,13 @@
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:pak_saaf/screens/sign_up_screen/SignUpScreen.dart';
 
 import '../../common/button_widget.dart';
 import '../../common/custom_animation.dart';
 import '../../utils/view_constants.dart';
 import '../login_screen/login_screen.dart';
 import '../main_bottom_nav/main_home_screen.dart';
-import '../sign_up_screen/sign_up_screen.dart';
+import '../sign_up_screen/OtpScreen.dart';
 
 import '../../../string_en.dart';
 import '../../../themes/text_styles.dart';

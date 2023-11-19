@@ -54,6 +54,7 @@ dependencies:
   flutter_keyboard_size: ^1.0.1
   # to use svg images/icons.
   flutter_svg: any
+  carousel_slider: ^4.0.0
   # to get more icon options.
   fluttericon: ^2.0.0
   # for network requests

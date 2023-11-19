@@ -13,6 +13,7 @@ class ThemeColor{
   static const textWhiteColor = Colors.black;
   static const textRippleGrey = Colors.grey;
   static const textHintColor_1 = Color(0xffB3B3B3);
+  static const textHintColor_2 = Color(0xffeeeeee);
   static const textSecondaryColor = Color(0xffF7F7F7);
   static const fadeBlackColor = Color(0x40000000);
   static const textFieldBackgroundColor = Colors.white;

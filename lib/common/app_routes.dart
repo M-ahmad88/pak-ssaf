@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/sign_up_screen/sign_up_screen.dart';
+import '../screens/sign_up_screen/OtpScreen.dart';
 import '../screens/splash_screen/splash_screen.dart';
 
 class AppRoutes {
@@ -34,7 +34,6 @@ class AppRoutes {
 
   static Map<String, WidgetBuilder> routes = {
     splashScreen: (context) => SplashScreen(),
-    signUp: (context) => SignUpScreen(),
 
   };
 
