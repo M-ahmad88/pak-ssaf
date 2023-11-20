@@ -21,6 +21,7 @@ import '../../common/scaffold_app_bar.dart';
 import '../../string_en.dart';
 import '../../themes/text_styles.dart';
 import '../../utils/color_constants.dart';
+import '../../utils/progress_dialog.dart';
 import '../../utils/size_utils.dart';
 import '../../utils/view_constants.dart';
 import '../login_screen/login_screen.dart';
@@ -71,11 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         isLoading  = true;
         formValid = true;
       });
-
-
     }
-
-
   }
 
  /* saveUserInfo() async{
@@ -339,6 +336,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> sendOTP() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext c)
+        {
+          return ProgressDialog(message: "Processing, Please wait...",);
+        }
+    );
     setState(() {
       isLoading = true;
 

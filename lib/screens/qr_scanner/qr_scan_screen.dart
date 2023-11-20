@@ -1,6 +1,7 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pak_saaf/common/scaffold_app_bar.dart';
 import 'package:pak_saaf/common/toast_message.dart';
 import 'package:pak_saaf/models/userModel.dart';
@@ -91,11 +92,16 @@ class _QRScanScreenState extends State<QRScanScreen> {
           return ProgressDialog(message: "Processing, Please wait...",);
         }
     );
-    DatabaseReference userRef = FirebaseDatabase.instance
+    DatabaseReference qrRef = FirebaseDatabase.instance
         .reference()
         .child('check');
 
-    DataSnapshot snapshot = (await userRef.once()).snapshot; // Access the snapshot property
+    DatabaseReference userRef = FirebaseDatabase.instance
+        .reference()
+        .child('users')
+        .child(currentFirebaseUser!.uid);
+
+    DataSnapshot snapshot = (await qrRef.once()).snapshot; // Access the snapshot property
 
     if (snapshot.value != null) {
       qrModelCurrentInfo = QRModel.fromSnapshot(snapshot);
@@ -104,15 +110,43 @@ class _QRScanScreenState extends State<QRScanScreen> {
 
     }
     if (result.toString().toLowerCase() == qrKeyString.toLowerCase()){
-      points+=qrModelCurrentInfo!.value!;
+      if(qrValue == 0){
+        Fluttertoast.showToast(msg: "QR code is expired, please scan again");
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return MainHomeScreen();
+        }));
+      }
+      else{
+        points+=qrModelCurrentInfo!.value!;
+        qrRef.update({'Score': 0}).then((_) {
+          // Successfully updated the points
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return MainHomeScreen();
+          }));
+        }).catchError((error) {
+          print("Error updating points: $error");
+          toastMessage(context, "Error updating points");
+          Navigator.pop(context);
+        });
+
+        userRef.update({'points': points}).then((_) {
+        }).catchError((error) {
+          print("Error updating points: $error");
+          toastMessage(context, "Error updating points");
+          Navigator.pop(context);
+        });
+
+
+      }
+
+      }
+    else{
+      Fluttertoast.showToast(msg: "QR code is expired, please scan again");
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return MainHomeScreen();
       }));
     }
-    else{
-      toastMessage(context, "QR code is expired");
-      Navigator.pop(context);
-    }
+
 
 
 
