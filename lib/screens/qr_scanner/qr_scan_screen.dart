@@ -1,4 +1,3 @@
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,8 +6,6 @@ import 'package:pak_saaf/common/toast_message.dart';
 import 'package:pak_saaf/models/userModel.dart';
 import 'package:pak_saaf/string_en.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-
-import '../../common/custom_animation.dart';
 import '../../utils/global.dart';
 import '../../utils/progress_dialog.dart';
 import '../main_bottom_nav/main_home_screen.dart';
@@ -146,13 +143,7 @@ class _QRScanScreenState extends State<QRScanScreen> {
         return MainHomeScreen();
       }));
     }
-
-
-
-
 }
-
-
 }
 
 

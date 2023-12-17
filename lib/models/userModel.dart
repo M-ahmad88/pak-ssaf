@@ -7,8 +7,8 @@ class UserModel {
   UserModel({this.points});
 
   UserModel.fromSnapshot(DataSnapshot snap){
-    points =( snap.value as dynamic)['points'];
-    name =( snap.value as dynamic)['name'];
+    points = (snap.value as dynamic)['points'];
+    name = (snap.value as dynamic)['name'];
   }
 }
 

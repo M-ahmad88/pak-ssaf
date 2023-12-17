@@ -8,6 +8,7 @@ import '../../common/custom_animation.dart';
 import '../../utils/view_constants.dart';
 import '../qr_scanner/qr_scan_screen.dart';
 import '../redeem_now.dart';
+import '../share_points_with_friends.dart';
 
 class MainHomeScreen extends StatefulWidget {
   double bottomNavPadding = 0;
@@ -320,6 +321,19 @@ Widget buildDrawer(context) {
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return RedeemScreen();
+                  }));
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.share, color: Colors.black), // Black icon
+                title: Text(
+                  'Share Points',
+                  style: TextStyle(color: Colors.black),
+                ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return SharePointsScreen();
                   }));
                 },
               ),
