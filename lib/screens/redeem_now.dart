@@ -4,21 +4,22 @@ import '../utils/color_constants.dart';
 
 class RedeemScreen extends StatelessWidget {
   final List<String> cardTitles = [
-    "Packet of Lays",
-    "McFlurry",
-    "Packet of Lays",
-    "McFlurry",
-    "Packet of Lays",
-    "McFlurry",
+    "Deal 1: 50 Rs",
+    "Deal 2: 100 Rs",
+    "Deal 3: 150 Rs",
+    "Deal 4: 200 Rs",
+    "Deal 5: 250 Rs",
+    "Deal 6: 300 Rs"
 
   ];
   final List<String> cardSubtitles = [
-    "10 pts",
-    "20 pts",
-    "10 pts",
-    "20 pts",
-    "10 pts",
-    "20 pts",
+
+    "50 pts",
+    "100 pts",
+    "150 pts",
+    "200 pts",
+    "250 pts",
+    "300 pts",
   ];
 
   @override
@@ -50,6 +51,7 @@ class RedeemScreen extends StatelessWidget {
                 elevation: 6.0,
                 child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     cardTitles[index],

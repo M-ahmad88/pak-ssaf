@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pak_saaf/screens/about_screen.dart';
+import 'package:pak_saaf/screens/info_screen.dart';
 import 'package:pak_saaf/screens/login_screen/login_screen.dart';
 import 'package:pak_saaf/utils/color_constants.dart';
 import 'package:pak_saaf/utils/global.dart';
@@ -288,30 +289,7 @@ Widget buildDrawer(context) {
                   ),
                 ),
               ),
-              ListTile(
-                leading: Icon(Icons.help, color: Colors.black), // Black icon
-                title: Text(
-                  'Help',
-                  style: TextStyle(color: Colors.black),
-                ),
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return AboutScreen();
-                  }));
-                },
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.settings, color: Colors.black), // Black icon
-                title: Text(
-                  'Settings',
-                  style: TextStyle(color: Colors.black),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              Divider(),
+
               ListTile(
                 leading: Icon(Icons.celebration_rounded, color: Colors.black), // Black icon
                 title: Text(
@@ -338,7 +316,32 @@ Widget buildDrawer(context) {
                 },
               ),
               Divider(),
-
+              ListTile(
+                leading: Icon(Icons.help, color: Colors.black), // Black icon
+                title: Text(
+                  'Help',
+                  style: TextStyle(color: Colors.black),
+                ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return AboutScreen();
+                  }));
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.info, color: Colors.black), // Black icon
+                title: Text(
+                  'About us',
+                  style: TextStyle(color: Colors.black),
+                ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return InfoScreen();
+                  }));
+                },
+              ),
+              Divider(),
             ],
           ),
         ),
@@ -395,6 +398,8 @@ Widget buildHorizontalCarousel(context) {
     options: CarouselOptions(
       height: 200.0,
       enlargeCenterPage: true,
+      autoPlay: true,
+        autoPlayInterval: Duration(seconds: 2),
     ),
     items: [
       buildCarouselItem(
